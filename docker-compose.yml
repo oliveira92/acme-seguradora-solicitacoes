@@ -1,0 +1,96 @@
+version: '3.4'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: acme-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: acme_db
+      MYSQL_USER: acme_user
+      MYSQL_PASSWORD: acme_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - acme-network
+
+  localstack:
+    image: localstack/localstack:3.0
+    container_name: acme-localstack
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    ports:
+      - "4566:4566"
+    volumes:
+      - ./localstack-init:/etc/localstack/init/ready.d
+      - ./.localstack_data:/var/lib/localstack
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - acme-network
+
+  wiremock:
+    image: wiremock/wiremock:3.3.1
+    container_name: acme-wiremock
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./wiremock/mappings:/home/wiremock/mappings
+      - ./wiremock/__files:/home/wiremock/__files
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/mappings"]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    networks:
+      - acme-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: acme-app
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - DB_HOST=mysql
+      - DB_PORT=3306
+      - DB_NAME=acme_db
+      - DB_USER=acme_user
+      - DB_PASS=acme_password
+      - AWS_REGION=us-east-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - SQS_ENDPOINT=http://localstack:4566/000000000000/solicitacoes
+      - MOCK_URL=http://wiremock:8080
+    ports:
+      - "8081:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+      localstack:
+        condition: service_healthy
+      wiremock:
+        condition: service_healthy
+    networks:
+      - acme-network
+
+volumes:
+  mysql_data:
+  localstack_data:
+
+networks:
+  acme-network:
+    driver: bridge
