@@ -58,35 +58,6 @@ services:
     networks:
       - acme-network
 
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: acme-app
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - DB_HOST=mysql
-      - DB_PORT=3306
-      - DB_NAME=acme_db
-      - DB_USER=acme_user
-      - DB_PASS=acme_password
-      - AWS_REGION=us-east-1
-      - AWS_ACCESS_KEY_ID=test
-      - AWS_SECRET_ACCESS_KEY=test
-      - SQS_ENDPOINT=http://localstack:4566/000000000000/solicitacoes
-      - MOCK_URL=http://wiremock:8080
-    ports:
-      - "8081:8080"
-    depends_on:
-      mysql:
-        condition: service_healthy
-      localstack:
-        condition: service_healthy
-      wiremock:
-        condition: service_healthy
-    networks:
-      - acme-network
-
 volumes:
   mysql_data:
   localstack_data:

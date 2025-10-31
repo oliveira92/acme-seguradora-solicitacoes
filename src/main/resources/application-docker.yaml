@@ -1,4 +1,5 @@
 spring:
+  profiles: docker
   application:
     name: acme-seguradora-solicitacoes
 

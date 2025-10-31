@@ -15,14 +15,13 @@ import com.acme.seguradora.interfaces.mapper.SolicitacaoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Import;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -40,24 +39,23 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(SolicitacaoController.class)
-@Import(SolicitacaoMapper.class)
+@ExtendWith(MockitoExtension.class)
 class SolicitacaoControllerComponentTest {
 
-    @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @Mock
     private CriarSolicitacaoUseCase criarSolicitacaoUseCase;
 
-    @MockBean
+    @Mock
     private ConsultarSolicitacaoUseCase consultarSolicitacaoUseCase;
 
-    @MockBean
+    @Mock
     private CancelarSolicitacaoUseCase cancelarSolicitacaoUseCase;
+
+    private SolicitacaoMapper solicitacaoMapper;
 
     private Solicitacao solicitacao;
     private UUID solicitacaoId;
@@ -65,6 +63,21 @@ class SolicitacaoControllerComponentTest {
 
     @BeforeEach
     void setUp() {
+
+        solicitacaoMapper = new SolicitacaoMapper();
+        objectMapper = new ObjectMapper();
+        objectMapper.findAndRegisterModules();
+
+        SolicitacaoController controller = new SolicitacaoController(
+                criarSolicitacaoUseCase,
+                consultarSolicitacaoUseCase,
+                cancelarSolicitacaoUseCase,
+                solicitacaoMapper
+        );
+
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+
         solicitacaoId = UUID.randomUUID();
         customerId = UUID.randomUUID();
         solicitacao = Solicitacao.builder()
