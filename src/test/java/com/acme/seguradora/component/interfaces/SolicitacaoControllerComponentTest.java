@@ -15,10 +15,10 @@ import com.acme.seguradora.interfaces.mapper.SolicitacaoMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -49,13 +49,13 @@ class SolicitacaoControllerComponentTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @MockBean
+    @Mock
     private CriarSolicitacaoUseCase criarSolicitacaoUseCase;
 
-    @MockBean
+    @Mock
     private ConsultarSolicitacaoUseCase consultarSolicitacaoUseCase;
 
-    @MockBean
+    @Mock
     private CancelarSolicitacaoUseCase cancelarSolicitacaoUseCase;
 
     private Solicitacao solicitacao;
@@ -71,7 +71,7 @@ class SolicitacaoControllerComponentTest {
                 .customerId(customerId)
                 .productId(UUID.randomUUID())
                 .category(CategoriaSegurado.AUTO)
-                .saleChannel(CanalVenda.APP)
+                .saleChannel(CanalVenda.MOBILE)
                 .paymentMethod(MetodoPagamento.PIX)
                 .status(EstadoSolicitacao.RECEIVED)
                 .createdAt(LocalDateTime.now())
@@ -94,7 +94,7 @@ class SolicitacaoControllerComponentTest {
                 .customer_id(customerId)
                 .product_id(UUID.randomUUID())
                 .category(CategoriaSegurado.AUTO)
-                .salesChannel(CanalVenda.APP)
+                .salesChannel(CanalVenda.MOBILE)
                 .paymentMethod(MetodoPagamento.PIX)
                 .total_monthly_premium_amount(new BigDecimal("99.90"))
                 .insured_amount(new BigDecimal("10000.00"))

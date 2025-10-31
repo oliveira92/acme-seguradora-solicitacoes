@@ -62,11 +62,11 @@ class ValidadorRegrasNegocioServiceTest {
                 Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.VIDA, new BigDecimal("800000.00")),
                 Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.AUTO, new BigDecimal("450000.00")),
                 Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.RESIDENCIAL, new BigDecimal("450000.00")),
-                Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.PATRIMONIAL, new BigDecimal("350000.00")),
+                Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.EMPRESARIAL, new BigDecimal("350000.00")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.VIDA, new BigDecimal("200000.00")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.RESIDENCIAL, new BigDecimal("200000.00")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.AUTO, new BigDecimal("75000.00")),
-                Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.PATRIMONIAL, new BigDecimal("50000.00"))
+                Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.EMPRESARIAL, new BigDecimal("50000.00"))
         );
     }
 
@@ -80,11 +80,11 @@ class ValidadorRegrasNegocioServiceTest {
                 Arguments.of(ClassificacaoRisco.ALTO_RISCO, CategoriaSegurado.VIDA, new BigDecimal("125000.01")),
                 Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.VIDA, new BigDecimal("800000.01")),
                 Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.AUTO, new BigDecimal("450000.01")),
-                Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.PATRIMONIAL, new BigDecimal("375000.01")),
+                Arguments.of(ClassificacaoRisco.PREFERENCIAL, CategoriaSegurado.EMPRESARIAL, new BigDecimal("375000.01")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.VIDA, new BigDecimal("220000.01")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.RESIDENCIAL, new BigDecimal("220000.01")),
                 Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.AUTO, new BigDecimal("75000.01")),
-                Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.PATRIMONIAL, new BigDecimal("55000.01"))
+                Arguments.of(ClassificacaoRisco.SEM_INFO, CategoriaSegurado.EMPRESARIAL, new BigDecimal("55000.01"))
         );
     }
 }

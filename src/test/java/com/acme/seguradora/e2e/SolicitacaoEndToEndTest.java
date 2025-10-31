@@ -15,11 +15,11 @@ import com.acme.seguradora.interfaces.dto.response.SolicitacaoResponseDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.TestConfiguration;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -57,7 +57,7 @@ class SolicitacaoEndToEndTest {
                 .customer_id(UUID.randomUUID())
                 .product_id(UUID.randomUUID())
                 .category(CategoriaSegurado.AUTO)
-                .salesChannel(CanalVenda.APP)
+                .salesChannel(CanalVenda.WEBSITE)
                 .paymentMethod(MetodoPagamento.PIX)
                 .total_monthly_premium_amount(new BigDecimal("100.00"))
                 .insured_amount(new BigDecimal("50000.00"))
