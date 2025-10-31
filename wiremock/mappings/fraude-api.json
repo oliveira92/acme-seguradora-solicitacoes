@@ -1,0 +1,24 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPathPattern": "/api/fraude/analisar.*"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Content-Type": "application/json"
+        },
+        "jsonBody": {
+          "orderId": "{{request.query.orderId}}",
+          "customerId": "{{request.query.customerId}}",
+          "analyzedAt": "{{now format='yyyy-MM-dd'T'HH:mm:ss'Z'}}",
+          "classification": "{{randomValue type='REGULAR' 'HIGH_RISK' 'PREFERENTIAL' 'NO_INFO'}}",
+          "occurrences": []
+        },
+        "transformers": ["response-template"]
+      }
+    }
+  ]
+}

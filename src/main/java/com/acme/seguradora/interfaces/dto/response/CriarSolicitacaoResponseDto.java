@@ -1,4 +1,4 @@
-package com.acme.seguradora.application.event;
+package com.acme.seguradora.interfaces.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,9 +12,8 @@ import java.util.UUID;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitacaoValidadaEvent {
-    private UUID solicitacaoId;
-    private UUID customerId;
-    private String classification;
-    private LocalDateTime timestamp;
+public class CriarSolicitacaoResponseDto {
+
+    private UUID id;
+    private LocalDateTime createdAt;
 }

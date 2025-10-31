@@ -1,4 +1,4 @@
-package com.acme.seguradora.application.event;
+package com.acme.seguradora.interfaces.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,15 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class SolicitacaoValidadaEvent {
-    private UUID solicitacaoId;
-    private UUID customerId;
-    private String classification;
+public class ErrorResponse {
+
     private LocalDateTime timestamp;
+    private int status;
+    private String error;
+    private String message;
+    private String path;
 }
