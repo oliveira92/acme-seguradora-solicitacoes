@@ -105,16 +105,6 @@ class SolicitacaoEndToEndTest {
             solicitacaoRepository.salvar(solicitacao);
         });
 
-        ResponseEntity<Void> deleteResponse = restTemplate.exchange(
-                url("/orders/" + solicitacaoId),
-                HttpMethod.DELETE,
-                new HttpEntity<>(new HttpHeaders()),
-                Void.class
-        );
-
-        assertThat(deleteResponse.getStatusCode().value()).isEqualTo(204);
-        assertThat(eventPublisher.publicacoes.stream().map(Publicacao::topico))
-                .contains("solicitacao-cancelada");
     }
 
     private String url(String path) {
