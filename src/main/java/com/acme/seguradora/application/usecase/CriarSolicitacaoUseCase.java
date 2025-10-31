@@ -23,6 +23,7 @@ public class CriarSolicitacaoUseCase {
     public Solicitacao executar(Solicitacao solicitacao) {
         solicitacao.setId(UUID.randomUUID());
         solicitacao.setStatus(EstadoSolicitacao.RECEIVED);
+        solicitacao.setCreatedAt(LocalDateTime.now());
         solicitacao.adicionarHistorico(EstadoSolicitacao.RECEIVED);
 
         Solicitacao solicitacaoSalva = solicitacaoRepository.salvar(solicitacao);
