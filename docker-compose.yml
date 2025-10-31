@@ -6,7 +6,7 @@ services:
     container_name: acme-mysql
     environment:
       MYSQL_ROOT_PASSWORD: root_password
-      MYSQL_DATABASE: acme_db
+      MYSQL_DATABASE: acme_seguros
       MYSQL_USER: acme_user
       MYSQL_PASSWORD: acme_password
     ports:
@@ -32,7 +32,7 @@ services:
     ports:
       - "4566:4566"
     volumes:
-      - ./localstack-init:/etc/localstack/init/ready.d
+      - ./localstack-init:/etc/localstack/init/ready.d/init-sqs.sh
       - ./.localstack_data:/var/lib/localstack
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
