@@ -1,25 +1,20 @@
-version: '3.4'
+version: '3.8'
 
 services:
   mysql:
     image: mysql:8.0
     container_name: acme-mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: acme_seguros
-      MYSQL_USER: acme_user
-      MYSQL_PASSWORD: acme_password
     ports:
       - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+    volumes: ["mysql_data:/var/lib/mysql"]
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 15s
       timeout: 5s
       retries: 5
-    networks:
-      - acme-network
 
   localstack:
     image: localstack/localstack:3.0
@@ -39,8 +34,6 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-    networks:
-      - acme-network
 
   wiremock:
     image: wiremock/wiremock:3.3.1
@@ -55,13 +48,7 @@ services:
       interval: 15s
       timeout: 5s
       retries: 5
-    networks:
-      - acme-network
 
 volumes:
   mysql_data:
   localstack_data:
-
-networks:
-  acme-network:
-    driver: bridge
